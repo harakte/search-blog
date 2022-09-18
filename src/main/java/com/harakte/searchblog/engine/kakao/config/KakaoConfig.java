@@ -22,6 +22,7 @@ public class KakaoConfig {
                 -> requestTemplate.header("Authorization", "KakaoAK "+ restApiKey);
     }
 
+    @Bean
     public ErrorDecoder errorDecoder(){
         return new KakaoErrorDecoder();
     }

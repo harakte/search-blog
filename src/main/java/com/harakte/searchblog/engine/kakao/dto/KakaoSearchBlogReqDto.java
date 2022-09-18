@@ -13,10 +13,6 @@ public class KakaoSearchBlogReqDto {
     private Integer page;
     private Integer size;
 
-    public KakaoSearchBlogReqDto(String query) {
-        this.query = query;
-    }
-
     public KakaoSearchBlogReqDto(String query, Integer page, Integer size) {
         this.query = query;
         this.page = page;
