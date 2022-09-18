@@ -9,3 +9,8 @@ spring:
   h2:
     console:
       enabled: true
+
+kakao:
+  api:
+    url: "https://dapi.kakao.com"
+    key: "6194547d698099dfcc05445572a66bbb"
