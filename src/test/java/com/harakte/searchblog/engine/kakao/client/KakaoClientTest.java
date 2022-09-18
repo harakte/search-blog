@@ -21,8 +21,7 @@ public class KakaoClientTest {
 
     @Test
     public void searchBlog_test(){
-        KakaoSearchBlogReqDto reqDto = new KakaoSearchBlogReqDto();
-        //reqDto.setQuery("kakao");
+        KakaoSearchBlogReqDto reqDto = new KakaoSearchBlogReqDto("kakao");
         KakaoSearchBlogResDto resDto = kakaoClient.searchBlog(reqDto);
 
         log.info(resDto.toString());

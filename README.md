@@ -1,5 +1,28 @@
 # search-blog
 
+## 테이블
+### 키워드 테이블
+| Name         | Type    | Description |
+|:-------------|:--------|-------------|
+| id           |         |             |
+| keyword      |         |             |
+| search_count |         |             |
+| reg_datetime |         |             |
+| upd_datetime |         |             |
+
+### 블로그 정보 테이블
+| Name          | Type    | Description |
+|:--------------|:--------|-------------|
+| id            |         |             |
+| keyword_id    |         |             |
+| title         |         |             |
+| contents      |         |             |
+| url           |         |             |
+| blog_name     |         |             |
+| post_datetime |         |             |
+| reg_datetime  |         |             |
+| upd_datetime  |         |             |
+
 ## 사용 라이브러리
 - Spring Boot
 - H2
@@ -28,17 +51,17 @@ Query Parameter
 | size    | Integer | 페이지 사이즈     | X        |
 
 ### Response
-| Name               | Type       | Description |
-|:-------------------|:-----------|-------------|
-| totalCount         | Integer    | 총 검색 항목 수   |
-| pageableCount      | Integer    | 페이징 된 항목 수  |
-| isEnd              | Integer    | 페이징 끝 여부    |
-| blogs              | Json Array | 블로그 정보      |
-| blogs.title        | String     | 블로그 제목      |
-| blogs.contents     | String     | 블로그 내용      |
-| blogs.url          | String     | 블로그 url     |
-| blogs.bloggerName  | String     | 블로거 이름      |
-| blogs.postDateTime | DateTime   | 블로그 작성시간    |
+| Name               | Type       | Description  |
+|:-------------------|:-----------|--------------|
+| totalCount         | Integer    | 총 검색 항목 수    |
+| pageableCount      | Integer    | 페이징 된 항목 수   |
+| isEnd              | Integer    | 페이징 끝 여부     |
+| blogs              | Json Array | 블로그 게시글 정보   |
+| blogs.title        | String     | 블로그 게시글 제목   |
+| blogs.contents     | String     | 블로그 게시글 내용   |
+| blogs.url          | String     | 블로그 게시글 url  |
+| blogs.blogName     | String     | 블로그 이름       |
+| blogs.postDateTime | DateTime   | 블로그 게시글 작성시간 |
 
 ## GET /popular/keywords 인기 검색어
 ### 기본 정보
