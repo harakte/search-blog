@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Getter
@@ -16,7 +18,10 @@ public class SearchBlogReqDto {
 
     private String sort;
 
+    @Min(1)
     private Integer page;
 
+    @Min(1)
+    @Max(50)
     private Integer size;
 }

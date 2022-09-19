@@ -1,19 +1,110 @@
 package com.harakte.searchblog.service;
 
-import com.harakte.searchblog.dto.GetPopularTermsReqDto;
-import com.harakte.searchblog.dto.GetPopularTermsResDto;
-import com.harakte.searchblog.dto.SearchBlogReqDto;
-import com.harakte.searchblog.dto.SearchBlogResDto;
+import com.harakte.searchblog.dao.KeywordRepository;
+import com.harakte.searchblog.dto.*;
+import com.harakte.searchblog.engine.kakao.KakaoManager;
+import com.harakte.searchblog.entity.Blog;
+import com.harakte.searchblog.entity.Keyword;
+import com.harakte.searchblog.error.ApiException;
+import com.harakte.searchblog.error.ErrorStatus;
+import com.harakte.searchblog.mapper.BlogInfoMapper;
+import com.harakte.searchblog.mapper.KeywordMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
+@RequiredArgsConstructor
 public class SearchBlogService {
 
+    private final KakaoManager kakaoManager;
+    private final KeywordRepository keywordRepository;
+
     public SearchBlogResDto searchBlog(SearchBlogReqDto reqDto){
-        return new SearchBlogResDto();
+        List<BlogDto> blogDtos = getBlogs(reqDto.getKeyword());
+
+        int page = 1;
+        if(reqDto.getPage() != null && reqDto.getPage() > 0){
+            page = reqDto.getPage();
+        }
+
+        int size = 10;
+        if(reqDto.getSize() != null && reqDto.getSize() > 0){
+            size = reqDto.getSize();
+        }
+
+        int skipCount = (page - 1) * size;
+        if(skipCount > blogDtos.size()){
+            throw new ApiException(ErrorStatus.PAGE_EXCEED_MAXIMUM);
+        }
+
+        boolean end = false;
+        if(blogDtos.size() <= skipCount + size){
+            end = true;
+        }
+
+        List<BlogDto> pagingBlogDtos = blogDtos.stream()
+                .skip(skipCount)
+                .limit(size)
+                .collect(Collectors.toList());
+
+        SearchBlogResDto resDto = new SearchBlogResDto();
+        resDto.setTotalCount(blogDtos.size());
+        resDto.setPageableCount(pagingBlogDtos.size());
+        resDto.setBlogs(pagingBlogDtos);
+        resDto.setEnd(end);
+        return resDto;
     }
 
-    public GetPopularTermsResDto getPopularTerms(GetPopularTermsReqDto reqDto){
-        return new GetPopularTermsResDto();
+    private List<BlogDto> getBlogs(String word){
+        Keyword keyword = getKeyword(word);
+        if(keyword.getBlogs() == null || keyword.getBlogs().isEmpty()){
+            return new ArrayList<>();
+        }
+
+        return keyword.getBlogs().stream()
+                .map(BlogInfoMapper.INSTANCE::getBlogDto)
+                .collect(Collectors.toList());
+    }
+
+    public Keyword getKeyword(String word){
+        Keyword keyword = keywordRepository.findFirstByWord(word);
+        if(keyword != null){
+            keyword.setSearchCount(keyword.getSearchCount() + 1);
+            keyword.setUpdDateTime(OffsetDateTime.now(ZoneOffset.UTC));
+            return keywordRepository.save(keyword);
+        }
+
+        Keyword keywordToInsert = new Keyword();
+        keywordToInsert.setWord(word);
+        keywordToInsert.setSearchCount(1);
+        keywordToInsert.setCreateDate(OffsetDateTime.now(ZoneOffset.UTC));
+
+        List<BlogDto> blogDtos = kakaoManager.getBlogInfos(word);
+        List<Blog> blogs = blogDtos.stream()
+                .map(blogInfoDto -> BlogInfoMapper.INSTANCE.getBlog(keywordToInsert, blogInfoDto))
+                .collect(Collectors.toList());
+        keywordToInsert.setBlogs(blogs);
+
+        return keywordRepository.save(keywordToInsert);
+    }
+
+    public GetPopularKeywordsResDto getPopularKeywords(GetPopularKeywordsReqDto reqDto){
+        int size = 10;
+        if(reqDto.getSize() == null){
+            size = reqDto.getSize();
+        }
+
+        List<Keyword> keywords = keywordRepository.findAllByOrderBySearchCountDesc(PageRequest.of(0, size));
+        List<KeywordDto> keywordDtos = keywords.stream()
+                .map(KeywordMapper.INSTANCE::getKeywordDto)
+                .collect(Collectors.toList());
+        return new GetPopularKeywordsResDto(keywordDtos);
     }
 }

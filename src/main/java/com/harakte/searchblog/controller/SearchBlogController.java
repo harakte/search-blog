@@ -1,7 +1,7 @@
 package com.harakte.searchblog.controller;
 
-import com.harakte.searchblog.dto.GetPopularTermsReqDto;
-import com.harakte.searchblog.dto.GetPopularTermsResDto;
+import com.harakte.searchblog.dto.GetPopularKeywordsReqDto;
+import com.harakte.searchblog.dto.GetPopularKeywordsResDto;
 import com.harakte.searchblog.dto.SearchBlogReqDto;
 import com.harakte.searchblog.dto.SearchBlogResDto;
 import com.harakte.searchblog.service.SearchBlogService;
@@ -28,8 +28,8 @@ public class SearchBlogController {
         return searchBlogService.searchBlog(reqDto);
     }
 
-    @GetMapping("/popular/terms")
-    public GetPopularTermsResDto getPopularTerms(@Valid final GetPopularTermsReqDto reqDto){
-        return searchBlogService.getPopularTerms(reqDto);
+    @GetMapping("/popular/keywords")
+    public GetPopularKeywordsResDto getPopularKeywords(@Valid final GetPopularKeywordsReqDto reqDto){
+        return searchBlogService.getPopularKeywords(reqDto);
     }
 }

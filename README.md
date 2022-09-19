@@ -5,7 +5,7 @@
 | Name         | Type    | Description |
 |:-------------|:--------|-------------|
 | id           |         |             |
-| keyword      |         |             |
+| word         |         |             |
 | search_count |         |             |
 | reg_datetime |         |             |
 | upd_datetime |         |             |
@@ -20,8 +20,6 @@
 | url           |         |             |
 | blog_name     |         |             |
 | post_datetime |         |             |
-| reg_datetime  |         |             |
-| upd_datetime  |         |             |
 
 ## 사용 라이브러리
 - Spring Boot
@@ -43,19 +41,19 @@
 ### Request
 Query Parameter
 
-| Name    | Type    | Description | Required |
-|:--------|:--------|-------------|----------|
-| keyword | String  | 검색 키워드      | O        |
-| sort    | String  | 정렬 조건       | X        |
-| page    | Integer | 페이지 번호      | X        |
-| size    | Integer | 페이지 사이즈     | X        |
+| Name    | Type    | Description                         | Required |
+|:--------|:--------|-------------------------------------|----------|
+| keyword | String  | 검색 키워드                              | O        |
+| sort    | String  | 정렬 조건                               | X        |
+| page    | Integer | 페이지 번호. 최소: 1, default: 1           | X        |
+| size    | Integer | 페이지 사이즈. 최소: 1, 최대: 50, default: 50 | X        |
 
 ### Response
 | Name               | Type       | Description  |
 |:-------------------|:-----------|--------------|
 | totalCount         | Integer    | 총 검색 항목 수    |
 | pageableCount      | Integer    | 페이징 된 항목 수   |
-| isEnd              | Integer    | 페이징 끝 여부     |
+| end                | Integer    | 페이징 끝 여부     |
 | blogs              | Json Array | 블로그 게시글 정보   |
 | blogs.title        | String     | 블로그 게시글 제목   |
 | blogs.contents     | String     | 블로그 게시글 내용   |
@@ -70,14 +68,14 @@ Query Parameter
 ### Request
 Query Parameter
 
-| Name | Type    | Description | Required |
-|:-----|:--------|-------------|----------|
-| size | Integer | 키워드 개수      | X        |
+| Name | Type    | Description                        | Required |
+|:-----|:--------|------------------------------------|----------|
+| size | Integer | 키워드 개수. 최소: 1, 최대: 10, default: 10 | X        |
 
 ### Response
-| Name             | Type       | Description |
-|:-----------------|:-----------|-------------|
-| totalCount       | Integer    | 총 키워드 개수    |
-| keywords         | Json Array | 키워드 정보      |
-| keywords.keyword | String     | 키워드         |
-| keywords.count   | Integer    | 키워드 검색 횟수   |
+| Name           | Type       | Description |
+|:---------------|:-----------|-------------|
+| totalCount     | Integer    | 총 키워드 개수    |
+| keywords       | Json Array | 키워드 정보      |
+| keywords.word  | String     | 키워드 단어      |
+| keywords.count | Integer    | 키워드 검색 횟수   |

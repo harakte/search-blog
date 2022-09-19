@@ -1,12 +1,17 @@
 package com.harakte.searchblog.mapper;
 
-import com.harakte.searchblog.dto.BlogInfoDto;
+import com.harakte.searchblog.dto.BlogDto;
 import com.harakte.searchblog.engine.kakao.dto.KakaoDocumentDto;
+import com.harakte.searchblog.entity.Blog;
+import com.harakte.searchblog.entity.Keyword;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,11 +21,27 @@ import static org.junit.Assert.assertEquals;
 public class BlogInfoMapperTest {
 
     @Test
-    public void toDto(){
+    public void getBlogInfoDto_kakao_test(){
         KakaoDocumentDto kakaoDocumentDto = new KakaoDocumentDto();
         kakaoDocumentDto.setTitle("test title");
-        BlogInfoDto blogInfoDto = BlogInfoMapper.INSTANCE.toDto(kakaoDocumentDto);
-        log.info(blogInfoDto.toString());
-        assertEquals(kakaoDocumentDto.getTitle(), blogInfoDto.getTitle());
+        BlogDto blogDto = BlogInfoMapper.INSTANCE.getBlogDto(kakaoDocumentDto);
+        log.info(blogDto.toString());
+        assertEquals(kakaoDocumentDto.getTitle(), blogDto.getTitle());
+    }
+
+    @Test
+    public void getBlog_test(){
+        Keyword keyword = new Keyword();
+        keyword.setWord("111");
+
+        BlogDto blogDto = new BlogDto();
+        blogDto.setBlogName("111");
+        blogDto.setContents("dfsfdfssdfsdf");
+        blogDto.setUrl("dfdfdf");
+        blogDto.setTitle("dfsffs");
+        blogDto.setPostDateTime(OffsetDateTime.now(ZoneOffset.UTC));
+        Blog blog = BlogInfoMapper.INSTANCE.getBlog(keyword, blogDto);
+
+        log.info(blog.toString());
     }
 }

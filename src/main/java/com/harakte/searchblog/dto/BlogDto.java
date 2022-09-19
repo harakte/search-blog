@@ -9,7 +9,7 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @ToString
-public class BlogInfoDto {
+public class BlogDto {
     private String title;
     private String contents;
     private String url;

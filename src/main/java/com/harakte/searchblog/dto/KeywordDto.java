@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class KeywordInfoDto {
-    private String keyword;
+public class KeywordDto {
+    private String word;
     private Integer count;
 }
