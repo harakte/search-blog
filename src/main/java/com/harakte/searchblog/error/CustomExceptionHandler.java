@@ -5,6 +5,7 @@ import com.harakte.searchblog.error.mapper.ErrorMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,12 +21,23 @@ public class CustomExceptionHandler {
                 .body(ErrorMapper.INSTANCE.toErrorResDto(errorStatus));
     }
 
-//    @ExceptionHandler(value = Exception.class)
-//    public ResponseEntity<ErrorResDto> handleException(Exception ex){
-//        ErrorResDto resDto = new ErrorResDto();
-//        resDto.setErrorCode();
-//        resDto.setErrorMessage(ex.getMessage());
-//        return ResponseEntity.status(httpStatus)
-//                .body(resDto);
-//    }
+    @ExceptionHandler(value = BindException.class)
+    public ResponseEntity<ErrorResDto> handleBindException(BindException ex){
+        ErrorStatus errorStatus = ErrorStatus.BAD_REQUEST;
+        ErrorResDto resDto = new ErrorResDto();
+        resDto.setErrorCode(errorStatus.getErrorCode());
+        resDto.setErrorMessage(ex.getMessage());
+        return ResponseEntity.status(errorStatus.getHttpStatus())
+                .body(resDto);
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<ErrorResDto> handleException(Exception ex){
+        ErrorStatus errorStatus = ErrorStatus.UNKNOWN;
+        ErrorResDto resDto = new ErrorResDto();
+        resDto.setErrorCode(errorStatus.getErrorCode());
+        resDto.setErrorMessage(ex.getMessage());
+        return ResponseEntity.status(errorStatus.getHttpStatus())
+                .body(resDto);
+    }
 }

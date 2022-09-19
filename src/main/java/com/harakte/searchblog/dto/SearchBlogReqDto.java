@@ -1,12 +1,11 @@
 package com.harakte.searchblog.dto;
 
+import com.harakte.searchblog.constant.Sort;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -16,7 +15,7 @@ public class SearchBlogReqDto {
     @NotBlank
     private String keyword;
 
-    private String sort;
+    private Sort sort;
 
     @Min(1)
     private Integer page;
