@@ -1,33 +1,12 @@
 # search-blog
-
-## 테이블
-### 키워드 테이블
-| Name         | Type    | Description |
-|:-------------|:--------|-------------|
-| id           |         |             |
-| word         |         |             |
-| search_count |         |             |
-| reg_datetime |         |             |
-| upd_datetime |         |             |
-
-### 블로그 정보 테이블
-| Name          | Type    | Description |
-|:--------------|:--------|-------------|
-| id            |         |             |
-| keyword_id    |         |             |
-| title         |         |             |
-| contents      |         |             |
-| url           |         |             |
-| blog_name     |         |             |
-| post_datetime |         |             |
-
 ## 사용 라이브러리
 - Spring Boot
 - H2
-- Lombok
-- Feign
-- MapStruct
 - JPA
+- Lombok : getter, setter 등의 메소트 작성 부담을 줄이기 위해서 사용
+- Feign : 웹 서비스 클라이언트를 쉽게 작성하여 사용하기 위해서 사용
+- MapStruct : 객체간 매핑을 쉽게 하기 위해서 사용
+- commons-lang3 : StringUtils 로 String 체크를 편하게 하기 위해 사용
 
 ## API 명세
 블로그 검색 서비스의 API 명세입니다.
@@ -41,12 +20,12 @@
 ### Request
 Query Parameter
 
-| Name    | Type    | Description                         | Required |
-|:--------|:--------|-------------------------------------|----------|
-| keyword | String  | 검색 키워드                              | O        |
-| sort    | String  | 정렬 조건                               | X        |
-| page    | Integer | 페이지 번호. 최소: 1, default: 1           | X        |
-| size    | Integer | 페이지 사이즈. 최소: 1, 최대: 50, default: 50 | X        |
+| Name    | Type    | Description                                            | Required |
+|:--------|:--------|--------------------------------------------------------|----------|
+| keyword | String  | 검색 키워드                                                 | O        |
+| sort    | String  | 정렬 조건. accuracy: 정확도순, recency: 최신순, default: accuracy | X        |
+| page    | Integer | 페이지 번호. 최소: 1, default: 1                              | X        |
+| size    | Integer | 페이지 사이즈. 최소: 1, 최대: 50, default: 50                    | X        |
 
 ### Response
 | Name               | Type       | Description  |
@@ -63,8 +42,8 @@ Query Parameter
 
 ## GET /popular/keywords 인기 검색어
 ### 기본 정보
-사용자들이 많이 검색한 순서대로, 최대 10개의 검색 키워드를 제공
-검색어 별로 검색 횟수도 함께 제공
+- 사용자들이 많이 검색한 순서대로, 최대 10개의 검색 키워드를 제공
+- 검색어 별로 검색 횟수도 함께 제공
 ### Request
 Query Parameter
 
@@ -79,3 +58,24 @@ Query Parameter
 | keywords       | Json Array | 키워드 정보      |
 | keywords.word  | String     | 키워드 단어      |
 | keywords.count | Integer    | 키워드 검색 횟수   |
+
+## 테이블
+### 키워드 테이블
+| Name         | Type                | Description |
+|:-------------|:--------------------|-------------|
+| id           | Long                | 키워드 아이디     |
+| word         | varchar(255)        | 키워드 단어      |
+| search_count | Integer             | 키워드 검색 횟수   |
+| reg_datetime | DateTime            | 키워드 최초 검색일  |
+| upd_datetime | DateTime            | 키워드 최근 검색일  |
+
+### 블로그 정보 테이블
+| Name          | Type          | Description |
+|:--------------|:--------------|-------------|
+| id            | Long          | 블로그 아이디     |
+| keyword_id    | Long          | 키워드 아이디     |
+| title         | varchar(255)  | 블로그 제목      |
+| contents      | varchar(1000) | 블로그 내용      |
+| url           | varchar(255)  | 블로그 url     |
+| blog_name     | varchar(255)  | 블로그 이름      |
+| post_datetime | DateTime      | 블로그 게시일     |
