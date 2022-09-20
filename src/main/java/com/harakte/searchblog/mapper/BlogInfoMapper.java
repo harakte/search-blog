@@ -12,24 +12,22 @@ public interface BlogInfoMapper {
 
     BlogInfoMapper INSTANCE = Mappers.getMapper(BlogInfoMapper.class);
 
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "contents", target = "contents")
-    @Mapping(source = "url", target = "url")
-    @Mapping(source = "blogname", target = "blogName")
-    @Mapping(source = "datetime", target = "postDateTime")
-    BlogDto getBlogDto(KakaoDocumentDto kakaoDocumentDto);
+    @Mapping(source = "document.title", target = "title")
+    @Mapping(source = "document.contents", target = "contents")
+    @Mapping(source = "document.url", target = "url")
+    @Mapping(source = "document.blogname", target = "blogName")
+    @Mapping(source = "document.datetime", target = "postDateTime")
+    @Mapping(source = "word", target = "word")
+    BlogDto getBlogDto(String word, KakaoDocumentDto document);
 
     @Mapping(source = "title", target = "title")
     @Mapping(source = "contents", target = "contents")
     @Mapping(source = "url", target = "url")
     @Mapping(source = "blogName", target = "blogName")
     @Mapping(source = "postDateTime", target = "postDateTime")
+    @Mapping(source = "keyword.word", target = "word")
     BlogDto getBlogDto(Blog blog);
 
+    @Mapping(source = "keyword", target = "keyword")
     Blog getBlog(Keyword keyword, BlogDto blogDto);
-
-    @AfterMapping
-    default void setBlog(@MappingTarget Blog blog, Keyword keyword){
-        blog.setKeyword(keyword);
-    }
 }

@@ -9,6 +9,8 @@ import com.harakte.searchblog.error.ApiException;
 import com.harakte.searchblog.error.ErrorStatus;
 import com.harakte.searchblog.mapper.BlogInfoMapper;
 import com.harakte.searchblog.mapper.KeywordMapper;
+import com.harakte.searchblog.sorter.Sorter;
+import com.harakte.searchblog.sorter.SorterFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class SearchBlogService {
 
     private final KakaoManager kakaoManager;
     private final KeywordRepository keywordRepository;
+    private final SorterFactory sorterFactory;
 
     public SearchBlogResDto searchBlog(SearchBlogReqDto reqDto){
         List<BlogDto> blogDtos = getBlogs(reqDto.getKeyword());
@@ -49,7 +52,9 @@ public class SearchBlogService {
             end = true;
         }
 
+        Sorter sorter = sorterFactory.getSorter(reqDto.getSort());
         List<BlogDto> pagingBlogDtos = blogDtos.stream()
+                .sorted(sorter)
                 .skip(skipCount)
                 .limit(size)
                 .collect(Collectors.toList());

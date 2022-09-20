@@ -22,9 +22,10 @@ public class BlogInfoMapperTest {
 
     @Test
     public void getBlogInfoDto_kakao_test(){
+        String keyword = "test";
         KakaoDocumentDto kakaoDocumentDto = new KakaoDocumentDto();
         kakaoDocumentDto.setTitle("test title");
-        BlogDto blog = BlogInfoMapper.INSTANCE.getBlogDto(kakaoDocumentDto);
+        BlogDto blog = BlogInfoMapper.INSTANCE.getBlogDto(keyword, kakaoDocumentDto);
         log.info(blog.toString());
         assertEquals(kakaoDocumentDto.getTitle(), blog.getTitle());
     }

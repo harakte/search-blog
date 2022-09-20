@@ -7,22 +7,22 @@ public class TFIDFCalculator {
     private TFIDFCalculator() {
     }
 
-    public static double tf(List<String> doc, String term){
+    public static double tf(List<String> doc, String word){
         if(doc == null || doc.isEmpty()){
             return 0;
         }
         double result = doc.stream()
-                .filter(term::equalsIgnoreCase)
+                .filter(word::equalsIgnoreCase)
                 .count();
         return result / doc.size();
     }
 
-    public static double idf(List<List<String>> docs, String term){
+    public static double idf(List<List<String>> docs, String word){
         if(docs == null || docs.isEmpty()){
             return 0;
         }
         double n = docs.stream()
-                .filter(doc -> doc.stream().anyMatch(term::equalsIgnoreCase))
+                .filter(doc -> doc.stream().anyMatch(word::equalsIgnoreCase))
                 .count();
         if(n == 0){
             return 0;
