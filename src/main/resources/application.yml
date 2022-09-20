@@ -1,24 +1,30 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:mydb
+    url: jdbc:h2:mem:mydb?rewriteBatchedStatements=true
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
+    show-sql: true
     database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        order_inserts: true
+        jdbc:
+          batch_size: 100
   h2:
     console:
       enabled: true
-
-jpa:
-  show-sql: true
-  properties:
-    hibernate:
-      format_sql: true
-  hibernate:
-    ddl-auto: create
 
 kakao:
   api:
     url: "https://dapi.kakao.com"
     key: "6194547d698099dfcc05445572a66bbb"
+
+logging:
+  level:
+    org:
+      hibernate: info
