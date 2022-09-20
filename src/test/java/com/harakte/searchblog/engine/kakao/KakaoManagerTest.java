@@ -1,6 +1,7 @@
 package com.harakte.searchblog.engine.kakao;
 
 import com.harakte.searchblog.dto.BlogDto;
+import com.harakte.searchblog.entity.Blog;
 import com.harakte.searchblog.mapper.BlogInfoMapper;
 import com.harakte.searchblog.util.WithClasses;
 import lombok.extern.slf4j.Slf4j;
@@ -28,8 +29,8 @@ public class KakaoManagerTest {
     @Test
     public void getBlogInfos_test(){
         String word = "khafre";
-        List<BlogDto> blogInfos = kakaoManager.getBlogInfos(word);
+        List<BlogDto> blogs = kakaoManager.getBlogs(word);
 
-        log.info(blogInfos.toString());
+        log.info(blogs.toString());
     }
 }

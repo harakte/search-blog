@@ -86,7 +86,7 @@ public class SearchBlogService {
         keywordToInsert.setSearchCount(1);
         keywordToInsert.setCreateDate(OffsetDateTime.now(ZoneOffset.UTC));
 
-        List<BlogDto> blogDtos = kakaoManager.getBlogInfos(word);
+        List<BlogDto> blogDtos = kakaoManager.getBlogs(word);
         List<Blog> blogs = blogDtos.stream()
                 .map(blogInfoDto -> BlogInfoMapper.INSTANCE.getBlog(keywordToInsert, blogInfoDto))
                 .collect(Collectors.toList());
