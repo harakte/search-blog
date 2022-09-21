@@ -91,7 +91,7 @@ public class SearchBlogService {
         Keyword keyword = keywordRepository.findFirstByWord(word);
         if(keyword != null){
             keyword.setSearchCount(keyword.getSearchCount() + 1);
-            keyword.setUpdDateTime(OffsetDateTime.now(ZoneOffset.UTC));
+            keyword.setUpdateDateTime(OffsetDateTime.now(ZoneOffset.UTC));
             return keywordRepository.save(keyword);
         }
 
@@ -102,7 +102,7 @@ public class SearchBlogService {
         Keyword keyword = new Keyword();
         keyword.setWord(word);
         keyword.setSearchCount(1);
-        keyword.setCreateDate(OffsetDateTime.now(ZoneOffset.UTC));
+        keyword.setCreateDateTime(OffsetDateTime.now(ZoneOffset.UTC));
 
         Set<BlogDto> blogDtos = kakaoManager.getBlogs(word);
         List<Blog> blogs = blogDtos.stream()

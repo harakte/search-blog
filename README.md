@@ -61,13 +61,13 @@ Query Parameter
 
 ## 테이블
 ### 키워드 테이블
-| Name         | Type                | Description |
-|:-------------|:--------------------|-------------|
-| id           | Long                | 키워드 아이디     |
-| word         | varchar(255)        | 키워드 단어      |
-| search_count | Integer             | 키워드 검색 횟수   |
-| reg_datetime | DateTime            | 키워드 최초 검색일  |
-| upd_datetime | DateTime            | 키워드 최근 검색일  |
+| Name             | Type                | Description |
+|:-----------------|:--------------------|-------------|
+| id               | Long                | 키워드 아이디     |
+| word             | varchar(255)        | 키워드 단어      |
+| search_count     | Integer             | 키워드 검색 횟수   |
+| create_date_time | DateTime            | 키워드 최초 검색일  |
+| update_date_time | DateTime            | 키워드 최근 검색일  |
 
 ### 블로그 정보 테이블
 | Name          | Type          | Description |

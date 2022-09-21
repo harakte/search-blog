@@ -22,11 +22,11 @@ public class Keyword {
     @Column(nullable = false)
     private Integer searchCount;
 
-    @Column(name = "reg_date_time", nullable = false)
-    private OffsetDateTime createDate;
+    @Column(name = "create_date_time", nullable = false)
+    private OffsetDateTime createDateTime;
 
-    @Column(name = "upd_date_time")
-    private OffsetDateTime updDateTime;
+    @Column(name = "update_date_time")
+    private OffsetDateTime updateDateTime;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "keyword")
     private List<Blog> blogs;
