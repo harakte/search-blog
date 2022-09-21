@@ -32,7 +32,7 @@ Query Parameter
 |:-------------------|:-----------|--------------|
 | totalCount         | Integer    | 총 검색 항목 수    |
 | pageableCount      | Integer    | 페이징 된 항목 수   |
-| end                | Integer    | 페이징 끝 여부     |
+| end                | Boolean    | 페이징 끝 여부     |
 | blogs              | Json Array | 블로그 게시글 정보   |
 | blogs.title        | String     | 블로그 게시글 제목   |
 | blogs.contents     | String     | 블로그 게시글 내용   |
