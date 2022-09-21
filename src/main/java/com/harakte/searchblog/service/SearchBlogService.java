@@ -65,7 +65,7 @@ public class SearchBlogService {
 
     public GetPopularKeywordsResDto getPopularKeywords(GetPopularKeywordsReqDto reqDto){
         int size = 10;
-        if(reqDto.getSize() == null){
+        if(reqDto.getSize() != null){
             size = reqDto.getSize();
         }
 
