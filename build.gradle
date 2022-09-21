@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.harakte'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '11'
 
 ext{
@@ -51,6 +51,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.3'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+}
+
+bootJar{
+    mainClass = 'com.harakte.searchblog.SearchBlogApplication'
 }
 
 dependencyManagement {
