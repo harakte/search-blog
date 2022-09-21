@@ -1,6 +1,7 @@
 package com.harakte.searchblog.engine.kakao;
 
 import com.harakte.searchblog.dto.BlogDto;
+import com.harakte.searchblog.engine.EngineManager;
 import com.harakte.searchblog.engine.kakao.client.KakaoClient;
 import com.harakte.searchblog.engine.kakao.dto.KakaoSearchBlogReqDto;
 import com.harakte.searchblog.engine.kakao.dto.KakaoSearchBlogResDto;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class KakaoManager {
+public class KakaoManager implements EngineManager {
     private final KakaoClient kakaoClient;
 
     public Set<BlogDto> getBlogs(String keyword){

@@ -1,6 +1,5 @@
 package com.harakte.searchblog.service;
 
-import com.harakte.searchblog.repository.KeywordRepository;
 import com.harakte.searchblog.dto.*;
 import com.harakte.searchblog.engine.kakao.KakaoManager;
 import com.harakte.searchblog.entity.Blog;
@@ -9,6 +8,7 @@ import com.harakte.searchblog.error.ApiException;
 import com.harakte.searchblog.error.ErrorStatus;
 import com.harakte.searchblog.mapper.BlogInfoMapper;
 import com.harakte.searchblog.mapper.KeywordMapper;
+import com.harakte.searchblog.repository.KeywordRepository;
 import com.harakte.searchblog.sorter.Sorter;
 import com.harakte.searchblog.sorter.SorterFactory;
 import lombok.RequiredArgsConstructor;
@@ -60,12 +60,7 @@ public class SearchBlogService {
                 .limit(size)
                 .collect(Collectors.toList());
 
-        SearchBlogResDto resDto = new SearchBlogResDto();
-        resDto.setTotalCount(blogDtos.size());
-        resDto.setPageableCount(pagingBlogDtos.size());
-        resDto.setBlogs(pagingBlogDtos);
-        resDto.setEnd(end);
-        return resDto;
+        return new SearchBlogResDto(blogDtos.size(), end, pagingBlogDtos);
     }
 
     public GetPopularKeywordsResDto getPopularKeywords(GetPopularKeywordsReqDto reqDto){

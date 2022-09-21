@@ -14,4 +14,13 @@ public class SearchBlogResDto {
     private Integer pageableCount;
     private Boolean end;
     private List<BlogDto> blogs;
+
+    public SearchBlogResDto(Integer totalCount, Boolean end, List<BlogDto> blogs) {
+        this.totalCount = totalCount;
+        this.end = end;
+        this.blogs = blogs;
+        if(blogs != null && !blogs.isEmpty()){
+            this.pageableCount = blogs.size();
+        }
+    }
 }
