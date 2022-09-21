@@ -1,6 +1,6 @@
 package com.harakte.searchblog.service;
 
-import com.harakte.searchblog.dao.KeywordRepository;
+import com.harakte.searchblog.repository.KeywordRepository;
 import com.harakte.searchblog.dto.*;
 import com.harakte.searchblog.engine.kakao.KakaoManager;
 import com.harakte.searchblog.entity.Blog;
@@ -19,6 +19,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -108,12 +109,11 @@ public class SearchBlogService {
         keyword.setSearchCount(1);
         keyword.setCreateDate(OffsetDateTime.now(ZoneOffset.UTC));
 
-        List<BlogDto> blogDtos = kakaoManager.getBlogs(word);
+        Set<BlogDto> blogDtos = kakaoManager.getBlogs(word);
         List<Blog> blogs = blogDtos.stream()
                 .map(blogInfoDto -> BlogInfoMapper.INSTANCE.getBlog(keyword, blogInfoDto))
                 .collect(Collectors.toList());
-        keyword.setBlogs(blogs);
 
-        return keywordRepository.save(keyword);
+        return keywordRepository.insertKeyword(keyword, blogs);
     }
 }
