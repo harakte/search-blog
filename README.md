@@ -27,7 +27,7 @@ Query Parameter
 | keyword | String  | 검색 키워드                                                 | O        |
 | sort    | String  | 정렬 조건. accuracy: 정확도순, recency: 최신순, default: accuracy | X        |
 | page    | Integer | 페이지 번호. 최소: 1, default: 1                              | X        |
-| size    | Integer | 페이지 사이즈. 최소: 1, 최대: 50, default: 50                    | X        |
+| size    | Integer | 페이지 사이즈. 최소: 1, 최대: 50, default: 10                    | X        |
 
 ### Response
 | Name               | Type       | Description  |
